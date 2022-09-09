@@ -74,47 +74,11 @@ RUN dnf update -y && dnf install -y\
 	vim-enhanced\
 	wget\
 	which\
-	xmvn\
- && curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
- && dnf install -y nodejs \
- && dnf debuginfo-install -y glibc \
- && dnf clean all
+	xmlto\
+	xmvn
 
 COPY pmdk.sh /
 RUN /pmdk.sh
 
-COPY valgrind.sh /
-RUN /valgrind.sh
-
-COPY pmemobj-cpp.sh /
-RUN /pmemobj-cpp.sh
-
-COPY pmemkv.sh /
-RUN /pmemkv.sh
-
-# Prepare extra maven params
-# It's executed and its result is exported within 'pmemkv-java.sh'
-COPY setup-maven-settings.sh /setup-maven-settings.sh
-
-COPY pmemkv-java.sh /
-RUN /pmemkv-java.sh
-
-COPY pmemkv-python.sh /
-RUN /pmemkv-python.sh
-
-COPY pmemkv-nodejs.sh /
-RUN /pmemkv-nodejs.sh
-
-COPY pmemkv-ruby.sh /
-RUN /pmemkv-ruby.sh
-
-COPY memkind.sh /
-RUN /memkind.sh
-
 COPY librpma.sh /
 RUN /librpma.sh
-
-COPY tz.sh /
-RUN /tz.sh
-
-RUN rm /pmdk.sh /valgrind.sh /pmemobj-cpp.sh /pmemkv.sh /setup-maven-settings.sh /pmemkv-java.sh /pmemkv-python.sh /pmemkv-nodejs.sh /pmemkv-ruby.sh /memkind.sh /librpma.sh /tz.sh
